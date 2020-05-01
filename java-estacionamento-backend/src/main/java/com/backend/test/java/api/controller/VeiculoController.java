@@ -1,5 +1,6 @@
 package com.backend.test.java.api.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,7 @@ public class VeiculoController {
 	@Autowired
 	private CadastroVeiculoService cadastroVeiculo;
 	
+	
 	@GetMapping
 	public List<Veiculo> listar() {
 		return veiculoRepository.findAll();
@@ -51,6 +53,8 @@ public class VeiculoController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Veiculo adicionar(@Valid @RequestBody Veiculo veiculo) {
+		veiculo.setHorarioChegada(LocalDateTime.now());
+		
 		return cadastroVeiculo.salvar(veiculo);
 	}
 	

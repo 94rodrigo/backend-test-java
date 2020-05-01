@@ -1,13 +1,49 @@
 package com.backend.test.java.domain.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
+
+import com.backend.test.java.domain.ValidationGroups;
+import com.sun.istack.NotNull;
+
+
+@Entity
 public class Estabelecimento {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@ManyToOne
+	@Valid
+	@ConvertGroup(from = Default.class, to = ValidationGroups.VeiculoId.class)
+	@JoinColumn(name = "estabelecimento_id")
+	private Veiculo veiculo;
+
+	@NotBlank
 	private String nome;
+	
+	@NotBlank
 	private String cnpj;
+	
+	@NotBlank
 	private String endereco;
+	
+	@NotBlank
 	private String telefone;
+	
+	@NotNull
 	private int qtdeVagasMoto;
+	
+	@NotNull
 	private int qtdeVagasCarro;
 	
 	public Long getId() {
@@ -76,4 +112,12 @@ public class Estabelecimento {
 			return false;
 		return true;
 	}
+	public Veiculo getVeiculo() {
+		return veiculo;
+	}
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
+	}
+	
+	
 }
